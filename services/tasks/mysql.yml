@@ -1,0 +1,36 @@
+---
+
+- name: Install MYSQL database server
+  apt: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - mysql-server
+    - python-mysqldb
+    - python3-pymysql
+  notify: Restart MYSQL
+  tags: Install_MYSQL
+
+- name: Set password for root user
+  mysql_user:
+    login_user: root
+    login_password: "{{ MYSQL_ROOT_PASSWORD }}"
+    check_implicit_admin: yes
+    name: root
+    password: "{{ MYSQL_ROOT_PASSWORD }}"
+    priv: '*.*:ALL'
+    host: "{{ item }}"
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+  tags: Set_password_for_mysql_user
+  notify: Restart MYSQL
+
+- name: Create database
+  mysql_db:
+    login_user: root
+    login_password: "{{ MYSQL_ROOT_PASSWORD }}"
+    name: "{{ DATABASE_NAME }}"
+    state: present
+  tags: Create_database

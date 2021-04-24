@@ -1,0 +1,20 @@
+---
+
+- name: Nginx webserver installation
+  apt:
+    name: nginx
+    state: latest
+  tags: Install_nginx
+  notify: Restart nginx
+
+- name: Remove nginx defautl file
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  tags: Remove_nginx_defautl_file
+
+- name: Copy the nginx configuration file
+  template:
+    src: nginx.j2
+    dest: /etc/nginx/sites-enabled/{{ CONFIG_NAME }}
+  tags: Copy_nginx_file

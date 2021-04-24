@@ -1,0 +1,21 @@
+---
+- name: Restart MYSQL
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+  tags: Restart_MYSQL
+
+- name: Restart php-fpm
+  service:
+    name: php{{ PHP_VERSION }}-fpm
+    state: started
+    enabled: yes
+  tags: Restart_php-fpm
+
+- name: Restart nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  tags: Restart_nginx

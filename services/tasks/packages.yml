@@ -1,0 +1,13 @@
+- name: Install basic packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - curl
+    - wget
+    - net-tools
+    - open-vm-tools
+    - vim
+    - git
+  tags: Install_packages
+

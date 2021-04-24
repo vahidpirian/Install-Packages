@@ -1,0 +1,19 @@
+---
+
+- name: Download nodejs
+  get_url:
+    url: https://deb.nodesource.com/setup_{{ VERSION_NODE }}.x
+    dest: /tmp/node_setup.sh
+    mode: '0555'
+  tags: Download_nodejs
+
+- name: Run script for add ppa to local package cache
+  shell: /bin/bash /tmp/node_setup.sh
+  tags: Run_script_install_nodejs
+
+- name: Install nodejs
+  apt:
+    update_cache: yes
+    name: nodejs
+    state: present
+  tags: Install_nodejs

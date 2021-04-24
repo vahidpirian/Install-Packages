@@ -1,0 +1,20 @@
+---
+
+- name: Download composer
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /tmp/composer-installer.php
+  tags: Download_composer
+
+- name: Install composer
+  command: "{{ item }}"
+  with_items:
+    - "php /tmp/composer-installer.php"
+    - mv composer.phar /usr/local/bin/composer
+  tags: Install_composer
+
+- name: Remove composer installer
+  file:
+    path: /tmp/composer-installer.php
+    state: absent
+  tags: Remove_composer

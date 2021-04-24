@@ -1,0 +1,8 @@
+---
+
+- include: packages.yml
+- include: mysql.yml
+- include: php.yml
+- include: nginx.yml
+- include: composer.yml
+- include: nodejs.yml

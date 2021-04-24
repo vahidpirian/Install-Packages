@@ -1,0 +1,30 @@
+---
+- name: Install packages
+  apt:
+    name: software-properties-common
+    state: latest
+  tags: Install_packages
+
+- name: Add php repository
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+  tags: Add_php_repo
+
+- name: Install php and php extentions
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - php{{ PHP_VERSION }}
+    - php{{ PHP_VERSION }}-curl
+    - php{{ PHP_VERSION }}-gd
+    - php{{ PHP_VERSION }}-json
+    - php{{ PHP_VERSION }}-mbstring
+    - php{{ PHP_VERSION }}-intl
+    - php{{ PHP_VERSION }}-mysql
+    - php{{ PHP_VERSION }}-xml
+    - php{{ PHP_VERSION }}-zip
+    - php{{ PHP_VERSION }}-fpm
+  tags: Install_php
+  notify: Restart php-fpm
